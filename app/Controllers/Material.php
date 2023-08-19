@@ -16,7 +16,7 @@ class Material extends ResourceController
 
     public function index()
     {
-        $params = '';
+        $params["filter"] = null;
         $url = parse_url($_SERVER["REQUEST_URI"]);
         if(isset($url["query"])){
             parse_str($url["query"], $params);
