@@ -51,3 +51,6 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 $routes->resource('material');
 $routes->resource('materialtype');
 $routes->resource('supplier');
+
+$routes->get('/task2/(:num)', 'Task2::index/$1');
+$routes->get('/task3/(:num)/(:num)', 'Task3::index/$1/$2');
