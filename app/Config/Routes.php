@@ -47,3 +47,7 @@ $routes->get('/', 'Home::index');
 if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
+
+$routes->resource('material');
+$routes->resource('materialtype');
+$routes->resource('supplier');
