@@ -18,7 +18,7 @@ class Supplier extends ResourceController
 
     public function index()
     {
-        $data = $this->model->orderBy('id', 'DESC')->findAll();
+        $data = $this->model->orderBy("id", "DESC")->findAll();
         return $this->respond($data);
     }
 
@@ -34,25 +34,26 @@ class Supplier extends ResourceController
 
         if (!$this->validate($rules, $messages)) {
 			$response = [
-				'status'  => 500,
-				'error'   => true,
-				'message' => $this->validator->getErrors(),
-				'data'    => []
+				"status"  => 500,
+				"error"   => true,
+				"message" => $this->validator->getErrors(),
+				"data"    => []
 			];
-            return $this->respondCreated($response);
+            return $this->respond($response);
 		}
 
         $data = [
-            'name'  => $this->request->getVar('name')
+            "name"  => $this->request->getVar("name")
         ];
 
         $supplier = $this->model->insert($data);
         $response = [
-            'status'   => 201,
-            'error'    => null,
-            'messages' => 'Supplier created successfully',
-            'data'     => $supplier
+            "status"   => 201,
+            "error"    => null,
+            "messages" => "Supplier created successfully",
+            "data"     => $supplier
         ];
-        return $this->respondCreated($response);
+
+        return $this->respond($response);
     }
 }
