@@ -49,7 +49,7 @@ class MaterialType extends ResourceController
         $materialType = $this->model->insert($data);
         $response = [
             "status"   => 201,
-            "error"    => null,
+            "error"    => false,
             "messages" => "Material type successfully created",
             "data"     => $materialType
         ];

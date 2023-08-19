@@ -15,27 +15,18 @@ class Material extends Model
     protected $protectFields    = true;
     protected $allowedFields    = ['code','name','price_buy','material_type','supplier'];
 
-    // Dates
-    // protected $useTimestamps = false;
-    // protected $dateFormat    = 'datetime';
-    // protected $createdField  = 'created_at';
-    // protected $updatedField  = 'updated_at';
-    // protected $deletedField  = 'deleted_at';
+    public function materialWithRelatedData($filter = null)
+    {
+        $builder = $this->db->table('materials m');
+        $builder->select('m.*, s.name as supplier_name, mt.name as material_type_name');
+        $builder->join('suppliers s', 's.id = m.supplier');
+        $builder->join('material_types mt', 'mt.id = m.material_type');
+        
+        if($filter != null) {
+            $builder->whereIn('material_type', $filter);
+        }
+        $query = $builder->get();
 
-    // Validation
-    // protected $validationRules      = [];
-    // protected $validationMessages   = [];
-    // protected $skipValidation       = false;
-    // protected $cleanValidationRules = true;
-
-    // Callbacks
-    // protected $allowCallbacks = true;
-    // protected $beforeInsert   = [];
-    // protected $afterInsert    = [];
-    // protected $beforeUpdate   = [];
-    // protected $afterUpdate    = [];
-    // protected $beforeFind     = [];
-    // protected $afterFind      = [];
-    // protected $beforeDelete   = [];
-    // protected $afterDelete    = [];
+        return $query->getResult();
+    }
 }

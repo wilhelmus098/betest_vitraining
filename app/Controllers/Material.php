@@ -2,10 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 use App\Models\Material as MaterialModel;
 use CodeIgniter\RESTful\ResourceController;
-use CodeIgniter\API\ResponseTrait;
 
 class Material extends ResourceController
 {
@@ -18,7 +16,17 @@ class Material extends ResourceController
 
     public function index()
     {
-        return "aaa";
+        $url = parse_url($_SERVER["REQUEST_URI"]);
+        parse_str($url["query"], $params);
+
+        $data = $this->model->materialWithRelatedData($params["filter"]);
+        $response = [
+            "status"  => 201,
+            "error"   => false,
+            "message" => "success",
+            "data"    => $data
+        ];
+        return $this->respond($response);
     }
 
     public function create()
@@ -78,7 +86,7 @@ class Material extends ResourceController
         $material = $this->model->insert($data);
         $response = [
             "status"   => 201,
-            "error"    => null,
+            "error"    => false,
             "messages" => "Material created successfully",
             "data"     => $material
         ];
@@ -136,7 +144,7 @@ class Material extends ResourceController
         $material = $this->model->update($id, $data);
         $response = [
           "status"   => 200,
-          "error"    => null,
+          "error"    => false,
           "messages" => "Material updated successfully",
           "data"     => $material
         ];
@@ -150,7 +158,7 @@ class Material extends ResourceController
             $this->model->delete($id);
             $response = [
                 "status"   => 200,
-                "error"    => null,
+                "error"    => false,
                 "messages" => "Material deleted successfully",
                 "data"     => $data
             ];
@@ -159,7 +167,7 @@ class Material extends ResourceController
         } else {
             $response = [
                 "status"   => 500,
-                "error"    => null,
+                "error"    => true,
                 "messages" => "Specified material doesn't exist.",
                 "data"     => []
             ];

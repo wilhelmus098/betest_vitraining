@@ -49,7 +49,7 @@ class Supplier extends ResourceController
         $supplier = $this->model->insert($data);
         $response = [
             "status"   => 201,
-            "error"    => null,
+            "error"    => false,
             "messages" => "Supplier created successfully",
             "data"     => $supplier
         ];
