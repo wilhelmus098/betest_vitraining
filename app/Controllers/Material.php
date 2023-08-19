@@ -16,8 +16,11 @@ class Material extends ResourceController
 
     public function index()
     {
+        $params = '';
         $url = parse_url($_SERVER["REQUEST_URI"]);
-        parse_str($url["query"], $params);
+        if(isset($url["query"])){
+            parse_str($url["query"], $params);
+        }
 
         $data = $this->model->materialWithRelatedData($params["filter"]);
         $response = [
